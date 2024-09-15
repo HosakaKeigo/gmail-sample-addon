@@ -1,0 +1,45 @@
+{
+  "timeZone": "Asia/Tokyo",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/script.locale",
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
+    "https://www.googleapis.com/auth/gmail.addons.current.message.metadata"
+  ],
+  "addOns": {
+    "common": {
+      "homepageTrigger": {
+        "runFunction": "onDefaultHomePageOpen",
+        "enabled": true
+      },
+      "layoutProperties": {
+        "primaryColor": "#ff392b",
+        "secondaryColor": "#d68617"
+      },
+      "logoUrl": "https://ssl.gstatic.com/docs/script/images/logo/script-64.png",
+      "name": "Sample",
+      "useLocaleFromApp": true
+    },
+    "gmail": {
+      "composeTrigger": {
+        "selectActions": [
+          {
+            "text": "テスト",
+            "runFunction": "onComposeTrigger"
+          }
+        ],
+        "draftAccess": "METADATA"
+      },
+      "contextualTriggers": [
+        {
+          "unconditional": {},
+          "onTriggerFunction": "onGmailMessageOpen"
+        }
+      ]
+    }
+  }
+}
