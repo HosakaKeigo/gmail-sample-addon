@@ -11,6 +11,7 @@ interface GeminiRequest {
   "generationConfig"?: {
     "temperature": number;
     "responseMimeType": "text/plain" | "application/json";
+    "responseSchema": Record<string, any>;
   }
 }
 

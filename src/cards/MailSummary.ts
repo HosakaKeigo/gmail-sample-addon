@@ -1,12 +1,17 @@
-const MailSummaryCard = (summary: string): GoogleAppsScript.Card_Service.Card => {
-  return CardService.newCardBuilder()
-    .setHeader(CardService.newCardHeader().setTitle("Mail Summary"))
-    .addSection(
+const MailSummaryCard = (summary: MailSummary["summary"]): GoogleAppsScript.Card_Service.Card => {
+  const summaryCard = CardService.newCardBuilder()
+    .setHeader(CardService.newCardHeader().setTitle("メール要約"))
+
+  for (const item of summary) {
+    summaryCard.addSection(
       CardService.newCardSection().addWidget(
         CardService.newDecoratedText()
-          .setTopLabel("要約")
-          .setText(summary),
-      ),
-    )
-    .build();
+          .setTopLabel(item.subject)
+          .setText(item.description)
+          .setWrapText(true), // テキストの折り返しを許可
+      )
+    );
+  }
+
+  return summaryCard.build();
 };
