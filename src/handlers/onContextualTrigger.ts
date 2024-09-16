@@ -2,5 +2,8 @@ function onGmailMessageOpen(e: GoogleAppsScript.Addons.EventObject): GoogleAppsS
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   sheet.appendRow(["onContextualTrigger", JSON.stringify(e)]);
 
-  return ContextualPageCard();
+  const { message } = getGmailInfo(e);
+  const subject = message.getSubject();
+
+  return ContextualPageCard(subject);
 }

@@ -5,8 +5,12 @@ function onSummarizeButtonClick(e: GoogleAppsScript.Addons.EventObject):
   const { message } = getGmailInfo(e)
   const mailInfo = createMailInfo(message);
 
+  // フォームの値の受け取り
+  const formInput = e.commonEventObject.formInputs;
+  const userInput = formInput?.user_input?.stringInputs.value[0];
+
   try {
-    const summary = summarizeMail(mailInfo);
+    const summary = summarizeMail(mailInfo, userInput);
     const summaryCard = MailSummaryCard(summary);
     return CardService.newActionResponseBuilder()
       .setNavigation(
@@ -31,7 +35,7 @@ function onSummarizeButtonClick(e: GoogleAppsScript.Addons.EventObject):
   }
 }
 
-function summarizeMail(mailInfo: string) {
+function summarizeMail(mailInfo: string, userInput: string) {
   const vertexAI = new VertexAIService("gemini-1.5-flash"); // 複数モデルを使い分けたい場合は、スクリプトプロパティからモデル名を取得するなどしてください。
   const schema = {
     "type": "OBJECT",
@@ -80,6 +84,9 @@ function summarizeMail(mailInfo: string) {
 \`\`\`
 
 いずれの項目も簡潔な日本語を心がけてください。敬語や丁寧語は不要です。氏名の敬称も不要です。
+
+## ユーザーからの追加の指示
+${userInput ? userInput : "特にありません。"}
 
 それでは回答してください。
 
